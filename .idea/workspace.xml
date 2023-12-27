@@ -4,23 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd6d9f4e-6499-48e2-82a8-2cc1bf4b5b0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/PhonePe_Data_Visualization.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aggregated_transaction_data.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aggregated_user_data.csv" afterDir="false" />
+    <list default="true" id="fd6d9f4e-6499-48e2-82a8-2cc1bf4b5b0b" name="Changes" comment="Completed all pages except top data Insights">
       <change afterPath="$PROJECT_DIR$/credentials.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dashboard.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_extraction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/map_transaction_data.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/map_user_data.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/states_india.geojson" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/top_transaction_data.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/top_user_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregated_user_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/aggregated_user_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_extraction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,19 +33,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.State_name_geojson.executor": "Run",
-    "Python.credentials.executor": "Run",
-    "Python.dashboard.executor": "Run",
-    "Python.data_extraction.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.State_name_geojson.executor&quot;: &quot;Run&quot;,
+    &quot;Python.credentials.executor&quot;: &quot;Run&quot;,
+    &quot;Python.dashboard.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_extraction.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Lenovo\PycharmProjects\PhonePe_Data_Visualization" />
@@ -78,9 +67,23 @@
       <option name="presentableId" value="Default" />
       <updated>1703256343858</updated>
     </task>
+    <task id="LOCAL-00001" summary="Completed all pages except top data Insights">
+      <option name="closed" value="true" />
+      <created>1703590248657</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703590248657</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.csv" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Completed all pages except top data Insights" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed all pages except top data Insights" />
   </component>
 </project>

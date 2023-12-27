@@ -50,6 +50,21 @@ state_name_map = {
     'uttarakhand': 'Uttarakhand',
     'west-bengal': 'West Bengal'
 }
+# Questions for the dropdown in top data insights page
+questions = [
+    "Top 10 states based on transaction amount",
+    "Least 10 states based on transaction amount",
+    "Top 10 States Based on Users",
+    "Least 10 States Based on Users",
+    "Top 10 states based on transaction volume",
+    "Least 10 states based on transaction volume",
+    "Top 10 States based on Recharge & Bill payments",
+    "Top 10 states based on peer to peer payments",
+    "Top 10 states based on Merchant Payments",
+    "Top 10 states based on Financial services"
+]
+
+
 @cache_data
 def fetch_data(query):
     db_config = {
@@ -113,6 +128,156 @@ def fetch_filtered_data(state, year, quarter, transaction_type):
         query += " WHERE " + " AND ".join(query_conditions)
     return fetch_data(query)
 
+# Fetch data to show user growth overtime in Overview page
+def show_user_growth_over_time():
+    st.subheader("User Growth Over Time")
+
+    # SQL query to fetch user growth data
+    query = """
+    SELECT Year, Quarter, SUM(RegisteredUsers) AS TotalUsers
+    FROM aggregated_user
+    GROUP BY Year, Quarter
+    ORDER BY Year, Quarter;
+    """
+    user_growth_data = fetch_data(query)
+
+    # Combining Year and Quarter for the x-axis
+    user_growth_data['Period'] = user_growth_data['Year'].astype(str) + ' Q' + user_growth_data['Quarter'].astype(str)
+
+    # Check if data is available and create chart
+    if not user_growth_data.empty:
+        fig = px.line(user_growth_data, x='Period', y='TotalUsers',
+                      title='User Growth Over Time', markers=True)
+        st.plotly_chart(fig)
+    else:
+        st.write("No user growth data available.")
+
+
+def top_states_by_transaction_amount():
+    query = """
+    SELECT State, SUM(TransactionAmount) AS TotalAmount
+    FROM aggregated_transaction
+    GROUP BY State
+    ORDER BY TotalAmount DESC
+    LIMIT 10;
+    """
+    data = fetch_data(query)
+
+    if not data.empty:
+        fig = px.bar(data, x='State', y='TotalAmount',
+                     title='Top 10 States by Transaction Amount',
+                     labels={'TotalAmount': 'Total Transaction Amount'},
+                     color='TotalAmount')
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available.")
+
+
+def least_states_by_transaction_amount():
+    query = """
+    SELECT State, SUM(TransactionAmount) AS TotalAmount
+    FROM aggregated_transaction
+    GROUP BY State
+    ORDER BY TotalAmount ASC
+    LIMIT 10;
+    """
+    data = fetch_data(query)
+
+    if not data.empty:
+        fig = px.bar(data, x='State', y='TotalAmount',
+                     title='Least 10 States by Transaction Amount',
+                     labels={'TotalAmount': 'Total Transaction Amount'},
+                     color='TotalAmount')
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available.")
+
+def top_states_by_users():
+    query = """
+    SELECT State, SUM(UserCount) AS TotalUsers
+    FROM aggregated_user
+    GROUP BY State
+    ORDER BY TotalUsers DESC
+    LIMIT 10;
+    """
+    data = fetch_data(query)
+
+    if not data.empty:
+        fig = px.bar(data, x='State', y='TotalUsers',
+                     title='Top 10 States by Users',
+                     labels={'TotalUsers': 'Total Number of Users'},
+                     color='TotalUsers')
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available.")
+
+def least_states_by_users():
+    query = """
+    SELECT State, SUM(UserCount) AS TotalUsers
+    FROM aggregated_user
+    GROUP BY State
+    ORDER BY TotalUsers ASC
+    LIMIT 10;
+    """
+    data = fetch_data(query)
+
+    if not data.empty:
+        fig = px.bar(data, x='State', y='TotalUsers',
+                     title='Least 10 States by Users',
+                     labels={'TotalUsers': 'Total Number of Users'},
+                     color='TotalUsers')
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available.")
+
+def top_states_by_transaction_volume():
+    query = """
+    SELECT State, SUM(TransactionCount) AS TotalVolume
+    FROM aggregated_transaction
+    GROUP BY State
+    ORDER BY TotalVolume DESC
+    LIMIT 10;
+    """
+    data = fetch_data(query)
+
+    if not data.empty:
+        fig = px.bar(data, x='State', y='TotalVolume',
+                     title='Top 10 States by Transaction Volume',
+                     labels={'TotalVolume': 'Total Transaction Volume'},
+                     color='TotalVolume')
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available.")
+
+
+def least_states_by_transaction_volume():
+    query = """
+    SELECT State, SUM(TransactionCount) AS TotalVolume
+    FROM aggregated_transaction
+    GROUP BY State
+    ORDER BY TotalVolume ASC
+    LIMIT 10;
+    """
+    data = fetch_data(query)
+
+    if not data.empty:
+        fig = px.bar(data, x='State', y='TotalVolume',
+                     title='Least 10 States by Transaction Volume',
+                     labels={'TotalVolume': 'Total Transaction Volume'},
+                     color='TotalVolume')
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available.")
+
+
+question_functions = {
+    "Top 10 States based on Transaction Amount": top_states_by_transaction_amount,
+    "Least 10 States based on Transaction Amount": least_states_by_transaction_amount,
+    "Top 10 States based on Total Users": top_states_by_users,
+    "Least 10 States based on Total Users": least_states_by_users,
+    "Top 10 States based on Transaction Volume": top_states_by_transaction_volume,
+    "Least 10 States based on Transaction Volume": least_states_by_transaction_volume
+}
 
 def show_overview():
     st.subheader("Overview of PhonePe Transactions")
@@ -134,6 +299,9 @@ def show_overview():
 
     # Display charts
     st.plotly_chart(transaction_values_chart)
+
+    # Display User Growth Over Time
+    show_user_growth_over_time()
 
 
 def show_transaction_analysis():
@@ -207,15 +375,11 @@ def create_choropleth(dataframe, geojson, location_column, color_column):
     return fig
 def show_top_data_insights():
     st.subheader("Top Data Insights")
+    question = st.selectbox("Select a Data Insight to View", list(question_functions.keys()))
 
-    query = ('SELECT * FROM top_transactions')
-    top_data = fetch_data(query)
+    if question in question_functions:
+        question_functions[question]()
 
-    if not top_data.empty:
-        st.dataframe(top_data)
-
-    else:
-        st.write("No Data Available.")
 
 def main():
     # Initialize 'current_page' in session state if it doesn't exist

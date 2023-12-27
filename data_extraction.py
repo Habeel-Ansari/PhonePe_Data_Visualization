@@ -48,6 +48,7 @@ df_agg_transaction = pd.DataFrame(extracted_data)
 csv_filename = "aggregated_transaction_data.csv"
 df_agg_transaction.to_csv(csv_filename, index = False)
 
+
 def process_agg_user_data(path):
     extracted_data = []
     for state in os.listdir(path):
@@ -64,23 +65,18 @@ def process_agg_user_data(path):
                                     data = json.load(json_file)
                                     quarter = int(quarter_file.split('.')[0])
 
-                                    # Check if 'usersByDevice' is present and not None
-                                    if data.get('data', {}).get('usersByDevice') is not None:
-                                        for user in data['data']['usersByDevice']:
-                                            brand = user['brand']
-                                            count = user['count']
-                                            percentage = user['percentage']
-                                            extracted_data.append({
-                                                'State': state,
-                                                'Year': int(year),
-                                                'Quarter': quarter,
-                                                'Brand': brand,
-                                                'UserCount': count,
-                                                'Percentage': percentage
-                                            })
-                                    #else:
-                                        # Skip the file if 'usersByDevice' is None or not present
-                                        #print(f"Skipping file as 'usersByDevice' is None or not present: {quarter_path}")
+                                    # Extract registeredUsers directly
+                                    registered_users = data.get('data', {}).get('aggregated', {}).get('registeredUsers')
+
+                                    # Append data for registered users
+                                    if registered_users is not None:
+                                        extracted_data.append({
+                                            'State': state,
+                                            'Year': int(year),
+                                            'Quarter': quarter,
+                                            'RegisteredUsers': registered_users
+                                        })
+
                             except Exception as e:
                                 print(f"Error processing file {quarter_path}: {e}")
     return extracted_data
@@ -162,7 +158,7 @@ def process_map_user_data(path):
                                             # Assuming metrics contains registered users info
                                             for metric in item['metric']:
                                                 if metric['type'] == 'TOTAL':  # Or any other type you're interested in
-                                                    registered_users = metric['count']  # Assuming count represents registered users
+                                                    registered_users = metric['count']
                                                     extracted_data.append({
                                                         'State': state,
                                                         'Year': int(year),
@@ -275,36 +271,6 @@ db_config = {
     'password': DB_PASSWORD,
     'database': 'phonepe_data'
 }
-
-# # Establishing a connection to MySQL
-connection = mysql.connector.connect(**db_config)
-# cursor = connection.cursor()
-
-# # Create a table in MySQL
-# create_table_query = '''
-# CREATE TABLE IF NOT EXISTS AggregatedTransactions (
-#     State VARCHAR(255),
-#     Year INT,
-#     Quarter INT,
-#     TransactionType VARCHAR(255),
-#     TransactionCount BIGINT,
-#     TransactionAmount FLOAT
-# );
-# '''
-# cursor.execute(create_table_query)
-#
-# # Load data from CSV to DataFrame
-# df = pd.read_csv('aggregated_transaction_data.csv')
-#
-# # Insert data into the table
-# for _, row in df.iterrows():
-#     insert_query = "INSERT INTO AggregatedTransactions (State, Year, Quarter, TransactionType, TransactionCount, TransactionAmount) VALUES (%s, %s, %s, %s, %s, %s)"
-#     cursor.execute(insert_query, tuple(row))
-#
-# # Commit changes and close the connection
-# connection.commit()
-# cursor.close()
-# connection.close()
 
 def insert_dataframe_to_sql(df, table_name, connection_details, replace_table=False):
     try:
