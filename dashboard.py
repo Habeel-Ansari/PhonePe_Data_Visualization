@@ -21,7 +21,7 @@ state_name_map = {
     'bihar': 'Bihar',
     'chandigarh': 'Chandigarh',
     'chhattisgarh': 'Chhattisgarh',
-    'dadra-&-nagar-haveli-&-daman-&-diu': 'Dadara & Nagar Havelli',  # Note: May need to handle Daman & Diu separately if it's in your data
+    'dadra-&-nagar-haveli-&-daman-&-diu': 'Dadara & Nagar Havelli',
     'delhi': 'NCT of Delhi',
     'goa': 'Goa',
     'gujarat': 'Gujarat',
@@ -50,19 +50,6 @@ state_name_map = {
     'uttarakhand': 'Uttarakhand',
     'west-bengal': 'West Bengal'
 }
-# Questions for the dropdown in top data insights page
-questions = [
-    "Top 10 states based on transaction amount",
-    "Least 10 states based on transaction amount",
-    "Top 10 States Based on Users",
-    "Least 10 States Based on Users",
-    "Top 10 states based on transaction volume",
-    "Least 10 states based on transaction volume",
-    "Top 10 States based on Recharge & Bill payments",
-    "Top 10 states based on peer to peer payments",
-    "Top 10 states based on Merchant Payments",
-    "Top 10 states based on Financial services"
-]
 
 
 @cache_data
@@ -194,7 +181,7 @@ def least_states_by_transaction_amount():
 
 def top_states_by_users():
     query = """
-    SELECT State, SUM(UserCount) AS TotalUsers
+    SELECT State, SUM(RegisteredUsers) AS TotalUsers
     FROM aggregated_user
     GROUP BY State
     ORDER BY TotalUsers DESC
@@ -213,7 +200,7 @@ def top_states_by_users():
 
 def least_states_by_users():
     query = """
-    SELECT State, SUM(UserCount) AS TotalUsers
+    SELECT State, SUM(RegisteredUsers) AS TotalUsers
     FROM aggregated_user
     GROUP BY State
     ORDER BY TotalUsers ASC

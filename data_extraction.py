@@ -4,7 +4,6 @@
 import json
 import os
 import pandas as pd
-import mysql.connector
 from sqlalchemy import create_engine, types
 from credentials import DB_USER, DB_PASSWORD
 
