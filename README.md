@@ -76,3 +76,5 @@ streamlit run dashboard.py
 ## Authors
 
 - Habeel Ansari
+
+<b>Check out the project walkthrough video at : https://www.youtube.com/watch?v=jvy2zLvaBNA&t=61s</b>
